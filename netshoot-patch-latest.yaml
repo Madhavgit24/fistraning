@@ -1,0 +1,18 @@
+spec:
+  template:
+    spec:
+      serviceAccountName: tcpdump-sa
+      securityContext:
+        runAsNonRoot: null
+      containers:
+        - args:
+            - '-c'
+            - while true; do ping localhost; sleep 1d;done
+          command:
+            - /bin/bash
+          image: mcp-docker-dev.docker.fis.dev/nicolaka/netshoot
+          name: netshoot
+          securityContext:
+            runAsUser: 0
+            capabilities:
+               add: ["NET_RAW", "NET_ADMIN"]
